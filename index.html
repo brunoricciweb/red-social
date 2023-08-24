@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h2>Agregá tu comentario!</h2>
+    <br>
+    <br>
+    <label>Usuario</label>
+    <br>
+    <input type="text" name="" id="usuario">
+    <br>
+    <br>
+    <label>Comentario</label>
+    <br>
+    <textarea name="" id="comentario" cols="30" rows="10"></textarea>
+    <br><br>
+    <input type="button" value="Comentar" id="boton">
+
+</body>
+
+<script>
+
+    console.log('Documento cargado');
+    let inputUsuario = document.getElementById('usuario');
+    let inputComentario = document.getElementById('comentario');
+    let miBoton = document.getElementById('boton');
+
+    
+    miBoton.addEventListener('click',()=>{
+        console.log('Se presionó el botón.');
+        console.log('El nombre de usuario es:', inputUsuario.value);
+        console.log('El comentario es:', inputComentario.value);
+
+        let miComentario = {
+            user: inputUsuario.value,
+            comment: inputComentario.value,
+            timestamp: new Date().toDateString()
+        };
+        console.log('El objeto es: ', miComentario);
+        
+        fetch('/comentario',{
+            method: 'POST',
+            body: JSON.stringify(miComentario),
+            headers: {"Content-Type": "application/json"},
+        }).then((response)=>{
+            response.json().then((jsonResult)=>{
+                console.log('Respuesta:', jsonResult);
+            })
+        })
+    });
+
+</script>
+</html>
